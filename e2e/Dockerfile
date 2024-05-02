@@ -1,6 +1,9 @@
 # Use Cypress base image
 FROM cypress/browsers:latest
 
+# Change ownership of .npm folder to non-root user
+RUN chown -R 1001:0 "/.npm"
+
 # Change to a non-root user
 USER 1001
 
