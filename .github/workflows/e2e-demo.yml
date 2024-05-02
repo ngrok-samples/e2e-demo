@@ -58,7 +58,7 @@ jobs:
           # Launch cypress container
           cd e2e/
           docker build -t burger-e2e:${{ github.sha }} .
-          docker run -e FRONTEND_URL=https://${{ vars.FRONTEND_URL }} burger-e2e:${{ github.sha }}
+          docker run -e FRONTEND_URL='https://${{ vars.FRONTEND_URL }}' burger-e2e:${{ github.sha }}
           
           # push docker images to dockerhub
           # docker push ${{ secrets.DOCKER_URL }}/burger-back:${{ github.sha }}
