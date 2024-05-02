@@ -41,7 +41,7 @@ jobs:
           cd ../
           
           # Alter k8s.yaml to sed the version
-          sed -i'' -e 's/DOCKER_URL/${{ secrets.DOCKER_URL }}/g' -e 's/IMAGE_LABEL/${{ github.sha }}/g' -e 's/FRONTEND_URL/${{ vars.FRONTEND_URL }}' k8s.yaml
+          sed -i'' -e 's/DOCKER_URL/${{ secrets.DOCKER_URL }}/g' -e 's/IMAGE_LABEL/${{ github.sha }}/g' -e 's/FRONTEND_URL/${{ vars.FRONTEND_URL }}/g' k8s.yaml
 
           # Install ngrok ingress controller
           helm repo add ngrok https://ngrok.github.io/kubernetes-ingress-controller
