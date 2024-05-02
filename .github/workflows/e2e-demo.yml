@@ -47,13 +47,13 @@ jobs:
           helm repo add ngrok https://ngrok.github.io/kubernetes-ingress-controller
           helm install ngrok-ingress-controller ngrok/kubernetes-ingress-controller \
             --namespace burgers \
+            --create-namespace \
             --set credentials.apiKey=${{ secrets.NGROK_API_KEY }} \
             --set credentials.authtoken=${{ secrets.NGROK_AUTHTOKEN }}
 
           sleep 10
 
           # Run containers in k3s
-          kubectl create namespace burgers
           kubectl apply -f k8s.yaml
           
           # Wait for ngrok to create tunnel
