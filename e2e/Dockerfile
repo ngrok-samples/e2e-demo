@@ -24,4 +24,4 @@ COPY . /src
 
 # as the container starts:
 # `npm run cy:run`
-CMD [ "npm", "run", "cy:run --env frontend_url=${FRONTEND_URL}" ]
+CMD [ "npm", "run", "cy:run", "--env frontend_url=${FRONTEND_URL}" ]
