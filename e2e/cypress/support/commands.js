@@ -23,4 +23,3 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-config.env.FRONTEND_URL = process.env.FRONTEND_URL;
