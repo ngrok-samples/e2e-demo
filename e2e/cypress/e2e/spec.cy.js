@@ -1,6 +1,6 @@
 describe('burgerplace spec', () => {
-  // const FRONTEND_URL = Cypress.env('FRONTEND_URL');
-  const FRONTEND_URL = "https://burger-places.ngrok.app"
+  const FRONTEND_URL = Cypress.env('frontend_url');
+  // const FRONTEND_URL = "https://burger-places.ngrok.app"
   // const FRONTEND_URL = process.env.FRONTEND_URL;
   // console.log(`FRONTEND_URL: ${FRONTEND_URL}`);
   if (!FRONTEND_URL){
