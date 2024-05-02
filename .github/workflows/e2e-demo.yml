@@ -1,6 +1,4 @@
-# This is a basic workflow to help you get started with Actions
-
-name: CI
+name: e2e-demo
 
 # Controls when the workflow will run
 on:
@@ -30,10 +28,14 @@ jobs:
           
       - name: Validate k3s is running
         run: |
-          cd api
-          docker build -t ${{ secret.DOCKER_URL }}/burger-back:${{ github.sha }}
-          cd ../app
-          docker build -t ${{ secret.DOCKER_URL }}/burger-front:${{ github.sha }}
+          # Fails the build if anything returns non-zero
+          set -e
+
+          # Build backend and frontend images
+          cd backend
+          docker build -t ${{ secret.DOCKER_URL }}/burger-back:${{ github.sha }} .
+          cd ../frontend
+          docker build -t ${{ secret.DOCKER_URL }}/burger-front:${{ github.sha }} .
           cd ../
           
           # Alter k8s.yaml to sed the version
@@ -42,9 +44,12 @@ jobs:
           # Run containers in k3s
           kubectl apply -f k8s.yaml
           
-          # TODO: launch cypress container
+          # Launch cypress container
+          cd e2e/
+          docker build -t burger-e2e:${{ github.sha }} .
+          docker run burger-e2e:${{ github.sha }}
           
-          # push docker containers
+          # push docker images to dockerhub
           # docker push ${{ secret.DOCKER_URL }}/burger-back:${{ github.sha }}
           # docker push ${{ secret.DOCKER_URL }}/burger-front:${{ github.sha }}
 
