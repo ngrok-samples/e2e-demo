@@ -1,0 +1,19 @@
+# downloaded files
+node_modules
+
+# built files
+dist
+bin
+obj
+package-lock.json
+
+# temp files
+.DS_Store
+
+# user specific files
+.vs
+*.user
+*.suo
+
+# secrets
+.env

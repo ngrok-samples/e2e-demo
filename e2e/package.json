@@ -1,0 +1,15 @@
+{
+  "name": "frontend",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "cy:open": "cypress open",
+    "cy:run": "cypress run --browser chrome"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "cypress": "^13.8.1"
+  }
+}

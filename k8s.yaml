@@ -1,0 +1,99 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: burgerback-deployment
+  namespace: burgers
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: burgerback
+  template:
+    metadata:
+      labels:
+        app: burgerback
+        version: IMAGE_LABEL
+    spec:
+      containers:
+      - name: burgerback
+        image: DOCKER_URL/burger-back:IMAGE_LABEL
+        resources: 
+          requests:
+            memory: "100Mi"
+          limits:
+            memory: "200Mi"
+        ports:
+        - containerPort: 5000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: burgerfront-deployment
+  namespace: burgers
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: burgerfront
+  template: 
+    metadata:
+      labels:
+        app: burgerfront
+        version: IMAGE_LABEL
+    spec:
+      containers:
+      - name: burgerfront
+        image: DOCKER_URL/burger-front:IMAGE_LABEL
+        ports:
+        - containerPort: 3000
+        env:
+        - name: BACKEND
+          value: http://burgerback:5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: burgerback
+  namespace: burgers
+spec:
+  selector:
+    app: burgerback
+  type: NodePort
+  ports:
+  - port: 5000
+    targetPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: burgerfront
+  namespace: burgers
+spec:
+  selector:
+    app: burgerfront
+  type: NodePort
+  ports:
+  - port: 3000
+    targetPort: 3000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: burgerfront
+  namespace: burgers
+  labels:
+    name: burgerfront
+  annotations:
+spec:
+  ingressClassName: ngrok
+  rules:
+  - host: burger-places.ngrok.app
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: burgerfront
+            port:
+              number: 3000 
