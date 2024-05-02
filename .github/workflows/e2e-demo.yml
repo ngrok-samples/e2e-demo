@@ -26,10 +26,12 @@ jobs:
         with:
           version: 'latest'
           
-      - name: Validate k3s is running
+      - name: Do the build
         run: |
           # Fails the build if anything returns non-zero
           set -e
+          # Echo commands to the console
+          set -x
 
           # Build backend and frontend images
           cd backend
@@ -42,6 +44,7 @@ jobs:
           sed -i'' -e 's/DOCKER_URL/${{ secrets.DOCKER_URL }}/g' -e 's/IMAGE_LABEL/${{ github.sha }}/g' k8s.yaml
 
           # Run containers in k3s
+          kubectl create namespace burgers
           kubectl apply -f k8s.yaml
           
           # Launch cypress container
