@@ -41,7 +41,15 @@ jobs:
           cd ../
           
           # Alter k8s.yaml to sed the version
-          sed -i'' -e 's/DOCKER_URL/${{ secrets.DOCKER_URL }}/g' -e 's/IMAGE_LABEL/${{ github.sha }}/g' k8s.yaml
+          sed -i'' -e 's/DOCKER_URL/${{ secrets.DOCKER_URL }}/g' -e 's/IMAGE_LABEL/${{ github.sha }}/g' -e 's/FRONTEND_URL/${{ vars.FRONTEND_URL }}' k8s.yaml
+
+          # Install ngrok ingress controller
+          helm repo add ngrok https://ngrok.github.io/kubernetes-ingress-controller
+          helm install ngrok-ingress-controller ngrok/kubernetes-ingress-controller \
+            --namespace ngrok-ingress-controller \
+            --create-namespace \
+            --set credentials.apiKey=${{ secrets.NGROK_API_KEY }} \
+            --set credentials.authtoken=${{ secrets.NGROK_AUTHTOKEN }}
 
           # Run containers in k3s
           kubectl create namespace burgers
@@ -50,7 +58,7 @@ jobs:
           # Launch cypress container
           cd e2e/
           docker build -t burger-e2e:${{ github.sha }} .
-          docker run burger-e2e:${{ github.sha }}
+          docker run -e FRONTEND_URL=https://${{ vars.FRONTEND_URL }} burger-e2e:${{ github.sha }}
           
           # push docker images to dockerhub
           # docker push ${{ secrets.DOCKER_URL }}/burger-back:${{ github.sha }}

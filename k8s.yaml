@@ -87,7 +87,7 @@ metadata:
 spec:
   ingressClassName: ngrok
   rules:
-  - host: burger-places.ngrok.app
+  - host: FRONTEND_URL
     http:
       paths:
       - pathType: Prefix

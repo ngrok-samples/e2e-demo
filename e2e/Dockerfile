@@ -2,12 +2,12 @@
 FROM cypress/browsers:latest
 
 # Change ownership of .npm folder to non-root user
-RUN chown -R 1001:0 "/.npm"
+# RUN chown -R 1001:0 "/.npm"
 
 # Change to a non-root user
-USER 1001
+# USER 1001
 
-ENV FRONTEND_URL https://burgers-test.ngrok.app
+ENV FRONTEND_URL ""
 
 # at build time:
 # set the current directory to `/src`
