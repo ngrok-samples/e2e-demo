@@ -35,19 +35,22 @@ jobs:
           cd ../app
           docker build -t ${{ secret.DOCKER_URL }}/burger-front:${{ github.sha }}
           cd ../
-          # TODO: might need to alter k8s.yaml to sed the version
+          
+          # Alter k8s.yaml to sed the version
           sed -i'' -e 's/DOCKER_URL/${{ secrets.DOCKER_URL }}/g' -e 's/IMAGE_LABEL/${{ github.sha }}/g' k8s.yaml
 
+          # Run containers in k3s
           kubectl apply -f k8s.yaml
           
           # TODO: launch cypress container
           
           # push docker containers
-          docker push ${{ secret.DOCKER_URL }}/burger-back:${{ github.sha }}
-          docker push ${{ secret.DOCKER_URL }}/burger-front:${{ github.sha }}
+          # docker push ${{ secret.DOCKER_URL }}/burger-back:${{ github.sha }}
+          # docker push ${{ secret.DOCKER_URL }}/burger-front:${{ github.sha }}
 
           # switch contexts
-
-          # launch apps in production
+          # kubectl config set-context your-cloud
           
+          # launch apps in production
+          # kubectl apply -f k8s.yaml
 
