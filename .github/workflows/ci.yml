@@ -31,19 +31,20 @@ jobs:
       - name: Validate k3s is running
         run: |
           cd api
-          docker build -t api:${{github.sha}}
+          docker build -t ${{ secret.DOCKER_URL }}/burger-back:${{ github.sha }}
           cd ../app
-          docker build -t app:${{github.sha}}
+          docker build -t ${{ secret.DOCKER_URL }}/burger-front:${{ github.sha }}
           cd ../
-          # TODO: might need to alter k8s.yaml to set the version
-          
+          # TODO: might need to alter k8s.yaml to sed the version
+          sed -i'' -e 's/DOCKER_URL/${{ secrets.DOCKER_URL }}/g' -e 's/IMAGE_LABEL/${{ github.sha }}/g' k8s.yaml
+
           kubectl apply -f k8s.yaml
           
           # TODO: launch cypress container
           
           # push docker containers
-          docker push api:${{github.sha}}
-          docker push app:${{github.sha}}
+          docker push ${{ secret.DOCKER_URL }}/burger-back:${{ github.sha }}
+          docker push ${{ secret.DOCKER_URL }}/burger-front:${{ github.sha }}
 
           # switch contexts
 
