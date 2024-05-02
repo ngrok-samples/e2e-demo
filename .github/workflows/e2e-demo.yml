@@ -58,8 +58,8 @@ jobs:
           kubectl apply -f k8s.yaml
           
           # Wait for ngrok to create tunnel
-          sleep 20
-          
+          sleep 60
+
           # Launch cypress container
           cd e2e/
           docker build -t burger-e2e:${{ github.sha }} .
