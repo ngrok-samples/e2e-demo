@@ -46,8 +46,7 @@ jobs:
           # Install ngrok ingress controller
           helm repo add ngrok https://ngrok.github.io/kubernetes-ingress-controller
           helm install ngrok-ingress-controller ngrok/kubernetes-ingress-controller \
-            --namespace ngrok-ingress-controller \
-            --create-namespace \
+            --namespace burgers \
             --set credentials.apiKey=${{ secrets.NGROK_API_KEY }} \
             --set credentials.authtoken=${{ secrets.NGROK_AUTHTOKEN }}
 
