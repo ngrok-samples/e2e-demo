@@ -33,9 +33,9 @@ jobs:
 
           # Build backend and frontend images
           cd backend
-          docker build -t ${{ secret.DOCKER_URL }}/burger-back:${{ github.sha }} .
+          docker build -t ${{ secrets.DOCKER_URL }}/burger-back:${{ github.sha }} .
           cd ../frontend
-          docker build -t ${{ secret.DOCKER_URL }}/burger-front:${{ github.sha }} .
+          docker build -t ${{ secrets.DOCKER_URL }}/burger-front:${{ github.sha }} .
           cd ../
           
           # Alter k8s.yaml to sed the version
@@ -50,8 +50,8 @@ jobs:
           docker run burger-e2e:${{ github.sha }}
           
           # push docker images to dockerhub
-          # docker push ${{ secret.DOCKER_URL }}/burger-back:${{ github.sha }}
-          # docker push ${{ secret.DOCKER_URL }}/burger-front:${{ github.sha }}
+          # docker push ${{ secrets.DOCKER_URL }}/burger-back:${{ github.sha }}
+          # docker push ${{ secrets.DOCKER_URL }}/burger-front:${{ github.sha }}
 
           # switch contexts
           # kubectl config set-context your-cloud
