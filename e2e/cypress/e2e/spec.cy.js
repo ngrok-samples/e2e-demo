@@ -1,12 +1,7 @@
 describe('burgerplace spec', () => {
-  // const FRONTEND_URL = Cypress.env('frontend_url');
-  const FRONTEND_URL = "https://burger-places-test.ngrok.app"
-  // const FRONTEND_URL = process.env.FRONTEND_URL;
-  // console.log(`FRONTEND_URL: ${FRONTEND_URL}`);
-  if (!FRONTEND_URL){
-    // throw new Error(JSON.stringify(process.env,null,2));
-    throw new Error(`FRONTEND_URL NOT SET: ${FRONTEND_URL}`);
-  }
+  const FRONTEND_URL = "https://burger-places.ngrok.app";
+  const BURGER_PLACE = "Dick's Drive-In";
+
   beforeEach(() => {
     cy.visit(FRONTEND_URL)
   })
@@ -19,9 +14,9 @@ describe('burgerplace spec', () => {
   })
   it('enters burger place', () => {
     cy.get('a').contains('Add').click()
-    cy.get('input[name=name]').type(`Lil Woody's Burgers & Shakes`)
+    cy.get('input[name=name]').type(BURGER_PLACE)
 
     cy.get('input[type=submit]').contains('Save').click()
-    cy.get('table').contains(`Lil Woody's Burgers & Shakes`)
+    cy.get('table').contains(BURGER_PLACE)
   })
 })

@@ -51,13 +51,8 @@ jobs:
             --set credentials.apiKey=${{ secrets.NGROK_API_KEY }} \
             --set credentials.authtoken=${{ secrets.NGROK_AUTHTOKEN }}
 
-          sleep 10
-
           # Run containers in k3s
           kubectl apply -f k8s.yaml
-          
-          # Wait for ngrok to create tunnel
-          sleep 60
 
           # Launch cypress container
           cd e2e/
