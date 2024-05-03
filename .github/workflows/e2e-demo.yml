@@ -37,11 +37,12 @@ jobs:
 
           # Build backend and frontend images
           cd backend
-          docker build -t ${{ secrets.DOCKER_URL }}/burger-back:${{ github.sha }} .
+          docker build -t burger-back:${{ github.sha }} .
           cd ../frontend
-          docker build -t ${{ secrets.DOCKER_URL }}/burger-front:${{ github.sha }} .
+          docker build -t burger-front:${{ github.sha }} .
           cd ../
           
+          docker image list
           # Alter k8s.yaml to sed the version
           sed -i'' -e 's/DOCKER_URL/${{ secrets.DOCKER_URL }}/g' -e 's/IMAGE_LABEL/${{ github.sha }}/g' -e 's/FRONTEND_URL/${{ vars.FRONTEND_URL }}/g' k8s.yaml
 
@@ -55,7 +56,7 @@ jobs:
 
           # Run containers in k3s
           kubectl apply -f k8s.yaml
-          sleep 120
+          sleep 60
           kubectl get all -A
           # Launch cypress container
           cd e2e/
