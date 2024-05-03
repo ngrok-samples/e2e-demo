@@ -51,9 +51,10 @@ jobs:
             --set credentials.apiKey=${{ secrets.NGROK_API_KEY }} \
             --set credentials.authtoken=${{ secrets.NGROK_AUTHTOKEN }}
 
+          sleep 60
           # Run containers in k3s
           kubectl apply -f k8s.yaml
-
+          sleep 60
           # Launch cypress container
           cd e2e/
           docker build -t burger-e2e:${{ github.sha }} .
