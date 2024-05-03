@@ -57,6 +57,9 @@ jobs:
           # Run containers in k3s
           kubectl apply -f k8s.yaml
           sleep 60
+          kubectl logs deployment/burgerfront-deployment -n burgers
+          kubectl logs deployment/burgerback-deployment -n burgers
+
           kubectl get all -A
           # Launch cypress container
           cd e2e/

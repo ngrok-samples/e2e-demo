@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: burgerback
-        image: DOCKER_URL/burger-back:IMAGE_LABEL
+        image: burger-back:IMAGE_LABEL
         resources: 
           requests:
             memory: "100Mi"
@@ -43,7 +43,7 @@ spec:
     spec:
       containers:
       - name: burgerfront
-        image: DOCKER_URL/burger-front:IMAGE_LABEL
+        image: burger-front:IMAGE_LABEL
         ports:
         - containerPort: 3000
         env:
