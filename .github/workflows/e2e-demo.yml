@@ -25,8 +25,6 @@ jobs:
         id: k3s
         with:
           version: 'latest'
-      - name: Setup upterm session
-        uses: lhotari/action-upterm@v1
 
       - name: Do the build
         run: |
@@ -56,10 +54,11 @@ jobs:
 
           # Run containers in k3s
           kubectl apply -f k8s.yaml
-          sleep 60
-          kubectl logs deployment/burgerfront-deployment -n burgers
-          kubectl logs deployment/burgerback-deployment -n burgers
 
+      - name: Setup upterm session
+        uses: lhotari/action-upterm@v1    
+      - name: Continue Build
+        run: |
           kubectl get all -A
           # Launch cypress container
           cd e2e/
