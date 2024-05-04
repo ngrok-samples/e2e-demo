@@ -69,8 +69,8 @@ jobs:
           # Run containers in k3s
           kubectl apply -f k8s.yaml
 
-      - name: Setup upterm session
-        uses: lhotari/action-upterm@v1
+      # - name: Setup upterm session
+      #   uses: lhotari/action-upterm@v1
 
       - name: Build Cypress Container and Run
         run: |
