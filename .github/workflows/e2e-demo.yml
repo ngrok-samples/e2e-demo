@@ -35,9 +35,9 @@ jobs:
 
           # Build backend and frontend images
           cd backend
-          docker build -t DOCKER_URL/burger-back:${{ github.sha }} .
+          docker build -t ${{ secrets.DOCKER_URL }}/burger-back:${{ github.sha }} .
           cd ../frontend
-          docker build -t DOCKER_URL/burger-front:${{ github.sha }} .
+          docker build -t ${{ secrets.DOCKER_URL }}/burger-front:${{ github.sha }} .
           cd ../
           
           docker image list
