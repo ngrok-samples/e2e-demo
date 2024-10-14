@@ -3,8 +3,4 @@ This is a project that illustrates how to configure and execute end-to-end testi
 
 The application contains two containers, one for the frontend and one for the backend. There is also a container with the Cypress test code.
 
-
-
-
-
 C-sharp application running in two Docker containers and orchestrated by Kubernetes. Heavily inspired by the project over at [Kubernetes Hands-on Workshop](https://github.com/robrich/kubernetes-hands-on-workshop) by Rob Richardson.
